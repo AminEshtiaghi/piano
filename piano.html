@@ -1,0 +1,59 @@
+<html lang="en">
+  <header>
+    <style>
+      .main {
+        font-family: Arial,serif;
+        font-size: 500px;
+        text-align: center;
+        margin-top: 100px;
+      }
+
+      .counter {
+        font-family: Arial,serif;
+        font-size: 50px;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </header>
+  <body onload="countDown(0)">
+    <div class="options">
+      <label for="seconds">Seconds:</label><input id="seconds" type="text" value="3" />
+      <label for="repeat">Repeat:</label><input id="repeat" type="checkbox" name="repeat" value="1" checked>
+    </div>
+    <div id="main" class="main"></div>
+    <div id="counter" class="counter"></div>
+  </body>
+
+  <script>
+    function chooseNote() {
+      const previousItem = document.getElementById("main").innerHTML;
+      const notes = ["C", "D", "E", "F", "G", "A", "B"];
+      const canRepeat = document.getElementById("repeat").checked;
+
+      if (previousItem && !canRepeat) {
+        const indexOfLastItem = notes.indexOf(previousItem);
+        if (indexOfLastItem > -1) {
+          notes.splice(indexOfLastItem, 1);
+        }
+      }
+
+      const index = Math.floor(Math.random() * (notes.length - 1));
+      document.getElementById("main").innerHTML = notes[index];
+    }
+
+    function countDown(counter) {
+      if (counter <= 1) {
+        chooseNote();
+        counter = document.getElementById("seconds").value;
+      } else {
+        counter--;
+      }
+
+      document.getElementById("counter").innerHTML = counter;
+
+      setTimeout(() => { countDown(counter); }, 1000);
+    }
+
+  </script>
+</html>
